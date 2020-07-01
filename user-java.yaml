@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-java
+  labels:
+    app: user-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-java
+  template:
+    metadata:
+      labels:
+        app: user-java
+    spec:
+      containers:
+        - name: user-java
+          image: registrygbf8621.azurecr.io/user-java
+          ports:
+            - containerPort: 80
+          envFrom:
+          - secretRef:
+              name: mysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-java
+  labels:
+    app: user-java
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: user-java

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile
+  labels:
+    app: userprofile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      containers:
+        - name: userprofile
+          image: registrygbf8621.azurecr.io/userprofile
+          ports:
+            - containerPort: 80
+          envFrom:
+          - secretRef:
+              name: mysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile
+  labels:
+    app: userprofile
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: userprofile
