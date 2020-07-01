@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poi
+  namespace: api-dev
+  labels:
+    app: poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poi
+  template:
+    metadata:
+      labels:
+        app: poi
+    spec:
+      containers:
+      - name: poi
+        image: registrygbf8621.azurecr.io/poi:1.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: SQL_USER
+          value: "sqladmingBf8621"
+        - name: SQL_PASSWORD
+          value: "yK2qq9Lj6"
+        - name:  SQL_SERVER
+          value: "sqlservergbf8621.database.windows.net"
+---       
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi
+  namespace: api-dev
+spec:
+  ports:
+  - port: 80
+  selector:
+      app: poi
