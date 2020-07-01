@@ -20,9 +20,20 @@ spec:
           image: registrygbf8621.azurecr.io/userprofile
           ports:
             - containerPort: 80
-          envFrom:
-          - secretRef:
-              name: mysecret
+      volumes:
+        - name: kvvolume
+          flexVolume:
+            driver: "azure/kv"
+            secretRef:
+              name: kvcreds
+            options:
+              keyvaultname: "TeamTwoKeyVault"
+              keyvaultobjectnames: "SQL-DBNAME;SQL-PASSWORD;SQL-SERVER;SQL-USER"
+              keyvaultobjectaliases: "SQL_DBNAME;SQL_PASSWORD;SQL_SERVER;SQL_USER"
+              keyvaultobjecttypes: "secret;secret;secret;secret"
+              resourcegroup: "teamResources"
+              subscriptionid: "df55c1eb-3581-4a61-82d7-df09e6cb666d"
+              tenantid: "3e33f401-e915-4aea-853b-84dcbf846eec"
 ---
 apiVersion: v1
 kind: Service
