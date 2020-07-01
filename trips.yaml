@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registrygbf8621.azurecr.io/trips
+        ports:
+        - containerPort: 80
+        env:
+          - name: CONFIG_FILES_PATH
+            value: "/secrets"
+          - name: SQL_USER
+            value: "sqladmingBf8621"
+          - name: SQL_PASSWORD
+            value: "yK2qq9Lj6"
+          - name: SQL_SERVER
+            value: "sqlservergbf8621.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
+          - name: OPENAPI_DOCS_URI
+            value: "http://changeme"
+          - name: DEBUG_LOGGING
+            value: "false"
+  selector:
+    matchLabels:
+      app: trips
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips
+  labels:
+    app: trips
+spec:
+  ports:
+      - port: 80
+  selector:
+      app: trips
