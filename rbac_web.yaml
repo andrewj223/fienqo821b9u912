@@ -1,0 +1,27 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: web-user-access
+  namespace: web-dev
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: Group
+  namespace: web-dev
+  name: 2d6ef086-b1ca-4cbd-a8b5-4aeafbbf9972
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: web-user-access
+  namespace: api-dev
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: Group
+  namespace: api-dev
+  name: 2d6ef086-b1ca-4cbd-a8b5-4aeafbbf9972
