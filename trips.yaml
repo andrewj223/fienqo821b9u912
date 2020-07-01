@@ -29,7 +29,7 @@ spec:
           secretRef:
             name: kvcreds
           options:
-            keyvaultname: "trips-kv"
+            keyvaultname: "TeamTwoKeyVault"
             keyvaultobjectnames: "SQL-USER;SQL-PASSWORD;SQL-SERVER;SQL-DBNAME"
             keyvaultobjecttypes: "secret;secret;secret;secret"
             keyvaultobjectaliases: "SQL_USER;SQL_PASSWORD;SQL_SERVER;SQL_DBNAME"
